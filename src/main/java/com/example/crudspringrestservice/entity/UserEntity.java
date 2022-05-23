@@ -1,49 +1,28 @@
 package com.example.crudspringrestservice.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
 public class UserEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String surname;
 
-    public UserEntity() {
-    }
-
-    public UserEntity(Long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    //какой столбец в таблице Users имеет FK
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    // @JsonBackReference
+    private AddressEntity address;
 }
