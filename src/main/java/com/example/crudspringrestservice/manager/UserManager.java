@@ -18,9 +18,12 @@ public class UserManager implements CrudManager<UserEntityDTO> {
 
     @Override
     public UserEntityDTO create(UserEntityDTO object) {
-        UserEntity userEntity = new UserEntity(object.getId(), object.getName(), object.getSurname(), object.getAddress()); // маппим пришедший с контроллера BaseDTO
+        var userEntity = new UserEntity(object.getId(), object.getName(), object.getSurname(), object.getAddress(), object.getPhones()); // маппим пришедший с контроллера BaseDTO
+        for (var userPhone : object.getPhones()) {
+            userPhone.setUser(userEntity);
+        }
         var returnedEntity = userEntityRepository.save(userEntity); // метод save интрефейса репозитория возвращает  сохраненную сущность
-        return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress()); // шлем на контроллер готовенький DTO
+        return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress(), returnedEntity.getPhones()); // шлем на контроллер готовенький DTO
         //TODO: м.сделать mapper'ы через MapStruct
     }
 
@@ -29,7 +32,7 @@ public class UserManager implements CrudManager<UserEntityDTO> {
         var object = userEntityRepository.findById(id);
         var returnedEntity = object.orElse(null);
         if (returnedEntity != null) {
-            return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress());
+            return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress(), returnedEntity.getPhones());
         } else {
             return null;
         }
@@ -44,7 +47,7 @@ public class UserManager implements CrudManager<UserEntityDTO> {
             existingEntity.setName(object.getName()); // обновляем данными, пришедшими из контроллера
             existingEntity.setSurname(object.getSurname());
             var returnedEntity = userEntityRepository.save(existingEntity);
-            return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress()); // шлем на контроллер готовенький DTO
+            return new UserEntityDTO(returnedEntity.getId(), returnedEntity.getName(), returnedEntity.getSurname(), returnedEntity.getAddress(), returnedEntity.getPhones()); // шлем на контроллер готовенький DTO
         }
         return null;
     }

@@ -1,8 +1,13 @@
 package com.example.crudspringrestservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,4 +30,9 @@ public class UserEntity {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     // @JsonBackReference
     private AddressEntity address;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonIgnore
+    private List<TelephoneEntity> phones = new ArrayList<>();
 }

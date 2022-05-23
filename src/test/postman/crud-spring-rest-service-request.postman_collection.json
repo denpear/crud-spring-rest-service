@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"name\": \"Denis\",\r\n\"surname\": \"Grukhin\"\r\n}",
+					"raw": "{\r\n\"name\": \"Denis\",\r\n\"surname\" : \"Grukhin\",\r\n\"gender\" : \"1\",\r\n\"address\" : {\r\n    \"street\" : \"Kremlin, 1\",\r\n    \"zipcode\" : \"121891\",\r\n    \"city\" : \"Moscow\"\r\n},\r\n\"phones\": [\r\n    {\r\n    \"phoneType\" : \"mobile\",\r\n    \"phoneNumber\" : \"79031572161\"\r\n    },\r\n    {\r\n    \"phoneType\" : \"home\",\r\n    \"phoneNumber\" : \"84955646732\"\r\n    }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
