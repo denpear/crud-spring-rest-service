@@ -1,5 +1,6 @@
 package com.example.crudspringrestservice;
 
+import com.example.crudspringrestservice.entity.PhoneType;
 import com.example.crudspringrestservice.entity.TelephoneEntity;
 import com.example.crudspringrestservice.entity.UserEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,7 +47,7 @@ class CrudSpringRestServiceApplicationTests {
             throws JsonProcessingException {
 
         UserEntity user = new UserEntity(1L, "John", "Fouls", null, null);
-        TelephoneEntity phone = new TelephoneEntity(2L, "book", "5674380-211", user);
+        TelephoneEntity phone = new TelephoneEntity(2L, PhoneType.MOBILE, "5674380-211", user);
         user.setPhones(Collections.singletonList(phone));
 
         String result = new ObjectMapper().writeValueAsString(user);
