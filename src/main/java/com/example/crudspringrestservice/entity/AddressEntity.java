@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-@Entity
+@Embeddable
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,14 +16,9 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Table(name = "addresses")
 public class AddressEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
 
-    //mappedBy - поле связанной сущности, определяющее ассоциацию. Требуется устанавливать только на ведомой стороне ассоциации.
-    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonManagedReference
+
+    @Transient
     @JsonIgnore
     private UserEntity user;
 

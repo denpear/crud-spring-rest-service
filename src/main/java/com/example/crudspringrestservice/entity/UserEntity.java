@@ -6,6 +6,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +26,7 @@ public class UserEntity {
     private String name;
     private String surname;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    //какой столбец в таблице Users имеет FK
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    // @JsonBackReference
+    @Embedded
     private AddressEntity address;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
