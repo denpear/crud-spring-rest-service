@@ -20,8 +20,8 @@ public class TelephoneEntity {
     @JsonIgnore
     private Long id;
 
-
-    protected String phoneType;
+    @Enumerated(EnumType.STRING) // Defaults to ORDINAL
+    protected PhoneType phoneType;
     protected String phoneNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)
